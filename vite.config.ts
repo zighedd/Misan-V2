@@ -21,33 +21,6 @@ export default defineConfig({
       polyfill: false,
     },
     chunkSizeWarningLimit: 900,
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
-            return 'react-vendor';
-          }
-          if (id.includes('node_modules/@supabase')) {
-            return 'supabase-vendor';
-          }
-          if (id.includes('node_modules/lucide-react')) {
-            return 'icons';
-          }
-          if (id.includes('node_modules/@radix-ui') || id.includes('node_modules/@floating-ui') || id.includes('node_modules/sonner')) {
-            return 'ui-vendor';
-          }
-          if (id.includes('/components/AdminPage') || id.includes('\\components\\AdminPage')) {
-            return 'admin';
-          }
-          if (id.includes('/components/ModalsContainer') || id.includes('\\components\\ModalsContainer')) {
-            return 'modals';
-          }
-          if (id.includes('node_modules')) {
-            return 'vendor';
-          }
-        },
-      },
-    },
   },
   server: {
     port: 3000,
