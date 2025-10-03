@@ -231,7 +231,7 @@ const useRealUsers = () => {
       setLoading(true);
       setError(null);
       
-      const { projectId } = await import('../utils/supabase/info');
+ const { buildEdgeFunctionUrl } = await import('../utils/supabase/edge');
       const { misanAuth } = await import('../utils/supabase/auth');
       const accessToken = await misanAuth.getAccessToken();
 
@@ -239,7 +239,7 @@ const useRealUsers = () => {
         throw new Error('Session administrateur expirée. Veuillez vous reconnecter.');
       }
 
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-810b4099/list-users`, {
+ const url = await buildEdgeFunctionUrl('/functions/v1/make-server-810b4099/list-users'); const response = await fetch(url, {
         headers: {
           'Authorization': `Bearer ${accessToken}`,
           'Content-Type': 'application/json'

@@ -41,6 +41,13 @@ export async function getSupabaseEdgeCredentials(): Promise<EdgeCredentials> {
 }
 
 export async function buildEdgeFunctionUrl(path: string): Promise<string> {
+  // Détection automatique local vs cloud
+  if (SUPABASE_URL?.includes('127.0.0.1') || SUPABASE_URL?.includes('localhost')) {
+    // Mode local : utiliser l'URL Supabase locale directement
+    return `${SUPABASE_URL}${path}`;
+  }
+  
+  // Mode cloud : utiliser le format classique
   const { projectId } = await getSupabaseEdgeCredentials();
   return `https://${projectId}.supabase.co${path}`;
 }

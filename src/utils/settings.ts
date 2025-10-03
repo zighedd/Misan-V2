@@ -492,20 +492,12 @@ let ensureEmailTemplatesPromise: Promise<void> | null = null;
 
 async function ensureAlertRulesTable(): Promise<void> {
   if (!ensureAlertRulesPromise) {
-    ensureAlertRulesPromise = supabase
-      .rpc('create_alert_rules_table')
-      .then(({ error }) => {
-        if (error) {
-          console.warn("Impossible d'initialiser alert_rules via RPC", error);
-        }
-      })
-      .finally(() => {
-        ensureAlertRulesPromise = null;
-      });
+    // La table alert_rules existe déjà en local, pas besoin de la créer
+    ensureAlertRulesPromise = Promise.resolve();
   }
-
-  await ensureAlertRulesPromise;
+  return ensureAlertRulesPromise;
 }
+
 
 async function ensureEmailTemplatesTable(): Promise<void> {
   if (!ensureEmailTemplatesPromise) {
